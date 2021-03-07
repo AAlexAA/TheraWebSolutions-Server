@@ -1,41 +1,41 @@
 package com.thera.TheraWebSolutionsServer.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.thera.TheraWebSolutionsServer.model.core.BaseEntity;
+import com.thera.TheraWebSolutionsServer.model.core.ICreationData;
+import com.thera.TheraWebSolutionsServer.model.core.ILastModifiedData;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
 
-@Entity // This tells Hibernate to make a table out of this class
-public class User {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+
+@Entity
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "user")
+@Data
+public class User extends BaseEntity<Integer> implements ICreationData, ILastModifiedData, Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    public Integer getId() {
-        return id;
-    }
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Date creationDateTime;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @Column(nullable = false)
+    private Date lastModifiedDateTime;
 
-    public String getName() {
-        return name;
-    }
+    private Integer createdBy;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    private Integer updatedBy;
 }
