@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface CoreRepository<T extends BaseEntity, ID> extends JpaRepository<T, ID> {
     List<T> findAll(Specification specification);
 
