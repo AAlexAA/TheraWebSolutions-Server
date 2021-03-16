@@ -30,7 +30,11 @@ public class UserRestController extends CoreRestControllerImpl<User, UserDto, In
     @Override
     @GetMapping("/{id}")
     public UserDto findById(@PathVariable Integer id) {
-        return super.findById(id);
+        UserDto userDto = super.findById(id);
+        if(userDto == null) {
+            throw new UserNotFoundException("User id "+ id + " not found");
+        }
+        return userDto;
     }
 
     @Override
